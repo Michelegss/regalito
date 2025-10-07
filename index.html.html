@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title> Luna 🌙</title>
+<style>
+body {
+  margin: 0;
+  background: radial-gradient(ellipse at bottom, #0f3057 0%, #1a1a40 60%, #000000 100%);
+  overflow: hidden;
+  height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  transition: background 2s ease;
+}
+
+/* Estados de hora */
+body.noche {
+  background: radial-gradient(ellipse at bottom, #0f3057 0%, #1a1a40 60%, #000000 100%);
+}
+
+body.atardecer {
+  background: radial-gradient(ellipse at bottom, #ff6b6b 0%, #ff8e8e 30%, #4a4a8a 70%, #1a1a40 100%);
+}
+
+body.amanecer {
+  background: radial-gradient(ellipse at bottom, #ffafbd 0%, #ffc3a0 30%, #6a93cb 60%, #2c3e50 100%);
+}
+
+body.medio-dia {
+  background: radial-gradient(ellipse at bottom, #87CEEB 0%, #4682B4 50%, #1E3A5F 100%);
+}
+
+/* 🌕 Sol/Luna */
+.celestial-body {
+  position: absolute;
+  border-radius: 50%;
+  z-index: 2;
+  transition: all 2s ease;
+}
+
+/* Luna */
+.celestial-body.luna {
+  width: 150px;
+  height: 150px;
+  background: radial-gradient(circle at 30% 30%, #f8f8f8, #d9d9d9, #b8b8b8);
+  box-shadow: 
+    0 0 60px rgba(255, 255, 255, 0.8),
+    0 0 100px rgba(255, 255, 255, 0.4),
+    inset -10px -10px 20px rgba(0, 0, 0, 0.2);
+  top: 8%;
+  right: 10%;
+}
+
+.celestial-body.luna::after {
+  content: '';
+  position: absolute;
+  top: 20%;
+  left: 25%;
+  width: 40px;
+  height: 40px;
+  background: rgba(200, 200, 200, 0.3);
+  border-radius: 50%;
+  box-shadow: 
+    5px 5px 0 0 rgba(180, 180, 180, 0.4),
+    -10px -5px 0 0 rgba(220, 220, 220, 0.2);
+}
+
+/* Sol */
+.celestial-body.sol {
+  width: 140px;
+  height: 140px;
+  background: radial-gradient(circle at 30% 30%, #FFD700, #FF8C00, #FF4500);
+  box-shadow: 
+    0 0 80px rgba(255, 215, 0, 0.9),
+    0 0 120px rgba(255, 140, 0, 0.6),
+    0 0 160px rgba(255, 69, 0, 0.3);
+  top: 10%;
+  right: 12%;
+}
+
+/* Posiciones para diferentes horas */
+body.noche .celestial-body.luna {
+  top: 8%;
+  right: 10%;
+  opacity: 1;
+}
+
+body.noche .celestial-body.sol {
+  opacity: 0;
+  top: 150%;
+}
+
+body.atardecer .celestial-body.luna {
+  top: 15%;
+  right: 5%;
+  opacity: 0.3;
+}
+
+body.atardecer .celestial-body.sol {
+  opacity: 1;
+  top: 5%;
+  right: 15%;
+}
+
+body.amanecer .celestial-body.luna {
+  top: 20%;
+  right: 8%;
+  opacity: 0.1;
+}
+
+body.amanecer .celestial-body.sol {
+  opacity: 1;
+  top: 8%;
+  right: 10%;
+}
+
+body.medio-dia .celestial-body.luna {
+  opacity: 0;
+}
+
+body.medio-dia .celestial-body.sol {
+  opacity: 1;
+  top: 5%;
+  right: 45%;
+}
+
+/* 🌟 Estrellas mejoradas */
+.stars {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  transition: opacity 2s ease;
+}
+
+body.noche .stars {
+  opacity: 1;
+}
+
+body.atardecer .stars {
+  opacity: 0.3;
+}
+
+body.amanecer .stars {
+  opacity: 0.1;
+}
+
+body.medio-dia .stars {
+  opacity: 0;
+}
+
+.star {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.8;
+  animation: twinkle 4s infinite ease-in-out;
+}
+
+.star.small {
+  width: 1px;
+  height: 1px;
+}
+
+.star.medium {
+  width: 2px;
+  height: 2px;
+}
+
+.star.large {
+  width: 3px;
+  height: 3px;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.3); }
+}
+
+/* Estrellas fugaces */
+.shooting-star {
+  position: absolute;
+  width: 100px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 100%);
+  transform: rotate(-45deg);
+  opacity: 0;
+  z-index: 1;
+}
+
+/* 🌄 Colina mejorada con vegetación */
+.hill {
+  position: absolute;
+  bottom: 0;
+  width: 150%;
+  height: 55vh;
+  left: -25%;
+  background: radial-gradient(ellipse at top, #052c3b, #02121a 80%);
+  border-radius: 50% 50% 0 0;
+  z-index: 3;
+  box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.5);
+  transition: background 2s ease;
+  overflow: hidden;
+}
+
+body.atardecer .hill {
+  background: radial-gradient(ellipse at top, #8B4513, #654321 80%);
+}
+
+body.amanecer .hill {
+  background: radial-gradient(ellipse at top, #9370DB, #6A5ACD 80%);
+}
+
+body.medio-dia .hill {
+  background: radial-gradient(ellipse at top, #228B22, #006400 80%);
+}
+
+.hill::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 30px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 50% 50% 0 0;
+}
+
+/* Vegetación - Hierbas y pasto */
+.grass {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 40px;
+  background: linear-gradient(transparent 0%, rgba(0, 50, 0, 0.3) 20%, rgba(0, 80, 0, 0.5) 100%);
+  z-index: 4;
+}
+
+body.atardecer .grass {
+  background: linear-gradient(transparent 0%, rgba(80, 50, 0, 0.3) 20%, rgba(100, 60, 0, 0.5) 100%);
+}
+
+body.amanecer .grass {
+  background: linear-gradient(transparent 0%, rgba(70, 40, 100, 0.3) 20%, rgba(90, 50, 120, 0.5) 100%);
+}
+
+body.medio-dia .grass {
+  background: linear-gradient(transparent 0%, rgba(0, 100, 0, 0.3) 20%, rgba(0, 130, 0, 0.6) 100%);
+}
+
+/* Hierbas individuales */
+.blade {
+  position: absolute;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(transparent, #2d5a2d, #3a7a3a);
+  border-radius: 1px;
+  animation: grassSway 3s ease-in-out infinite;
+}
+
+body.atardecer .blade {
+  background: linear-gradient(transparent, #5a452d, #7a5a3a);
+}
+
+body.amanecer .blade {
+  background: linear-gradient(transparent, #5a2d7a, #7a3a9a);
+}
+
+body.medio-dia .blade {
+  background: linear-gradient(transparent, #2d7a2d, #3a9a3a);
+}
+
+@keyframes grassSway {
+  0%, 100% { transform: skewX(0deg) scaleY(1); }
+  50% { transform: skewX(2deg) scaleY(1.05); }
+}
+
+/* Arbustos */
+.bush {
+  position: absolute;
+  bottom: 20px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, #1a3a1a, #0a2a0a);
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+  z-index: 3;
+}
+
+body.atardecer .bush {
+  background: radial-gradient(ellipse, #3a2a1a, #2a1a0a);
+}
+
+body.amanecer .bush {
+  background: radial-gradient(ellipse, #2a1a3a, #1a0a2a);
+}
+
+body.medio-dia .bush {
+  background: radial-gradient(ellipse, #1a5a1a, #0a3a0a);
+}
+
+/* Flores */
+.flower {
+  position: absolute;
+  z-index: 4;
+  animation: flowerGlow 4s ease-in-out infinite;
+}
+
+.flower-stem {
+  position: absolute;
+  width: 2px;
+  background: linear-gradient(transparent, #4a4a4a, #2a2a2a);
+  bottom: 0;
+}
+
+.flower-bloom {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ff6b6b, #e91e63);
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
+}
+
+body.medio-dia .flower-bloom {
+  background: radial-gradient(circle, #ffeb3b, #ff9800);
+  box-shadow: 0 0 10px rgba(255, 235, 59, 0.5);
+}
+
+@keyframes flowerGlow {
+  0%, 100% { opacity: 0.7; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.1); }
+}
+
+/* Rocas */
+.rock {
+  position: absolute;
+  background: linear-gradient(45deg, #3a3a3a, #2a2a2a, #1a1a1a);
+  border-radius: 5px;
+  box-shadow: 
+    inset -2px -2px 5px rgba(255,255,255,0.1),
+    inset 2px 2px 5px rgba(0,0,0,0.5),
+    0 2px 5px rgba(0,0,0,0.3);
+  z-index: 3;
+}
+
+/* Árbol pequeño */
+.tree {
+  position: absolute;
+  z-index: 3;
+}
+
+.tree-trunk {
+  position: absolute;
+  width: 8px;
+  background: linear-gradient(90deg, #5d4037, #3e2723);
+  bottom: 0;
+  border-radius: 4px 4px 0 0;
+}
+
+.tree-top {
+  position: absolute;
+  width: 40px;
+  height: 50px;
+  background: radial-gradient(ellipse, #1b5e20, #0d3b0f);
+  border-radius: 50% 50% 40% 40%;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+}
+
+body.atardecer .tree-top {
+  background: radial-gradient(ellipse, #5d4037, #3e2723);
+}
+
+body.amanecer .tree-top {
+  background: radial-gradient(ellipse, #4a148c, #311b92);
+}
+
+body.medio-dia .tree-top {
+  background: radial-gradient(ellipse, #2e7d32, #1b5e20);
+}
+
+/* Luciérnagas para la noche */
+.firefly {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: #ffeb3b;
+  border-radius: 50%;
+  opacity: 0;
+  filter: blur(1px);
+  animation: fireflyFloat 8s ease-in-out infinite;
+  z-index: 2;
+}
+
+@keyframes fireflyFloat {
+  0%, 100% { 
+    opacity: 0;
+    transform: translate(0, 0) scale(1);
+  }
+  10% { opacity: 0.8; }
+  50% { 
+    opacity: 1;
+    transform: translate(100px, -150px) scale(1.2);
+  }
+  90% { opacity: 0.3; }
+}
+
+/* 🐈 GATO ULTRA MEJORADO */
+.cat-container {
+  position: absolute;
+  bottom: 17%;
+  left: 48%;
+  transform: translateX(-50%);
+  width: 400px;
+  height: 300px;
+  z-index: 4;
+  filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.7));
+}
+
+.cat-body {
+  position: absolute;
+  width: 220px;
+  height: 120px;
+  background: linear-gradient(135deg, #2d2d2d, #1a1a1a, #0a0a0a);
+  border-radius: 60px 60px 40px 40px;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: breathe 4s ease-in-out infinite;
+  box-shadow: 
+    inset -5px -5px 10px rgba(255,255,255,0.1),
+    inset 5px 5px 10px rgba(0,0,0,0.5);
+}
+
+@keyframes breathe {
+  0%, 100% { transform: translateX(-50%) scale(1); }
+  50% { transform: translateX(-50%) scale(1.02); }
+}
+
+.cat-head {
+  position: absolute;
+  width: 100px;
+  height: 90px;
+  background: linear-gradient(135deg, #2d2d2d, #1a1a1a);
+  border-radius: 45px 45px 40px 40px;
+  bottom: 150px;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 
+    inset -3px -3px 8px rgba(255,255,255,0.1),
+    inset 3px 3px 8px rgba(0,0,0,0.5);
+}
+
+/* Orejas con interior */
+.cat-ears {
+  position: absolute;
+  width: 120px;
+  height: 50px;
+  bottom: 220px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.ear {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 25px solid transparent;
+  border-right: 25px solid transparent;
+  border-bottom: 40px solid #1a1a1a;
+  filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.5));
+}
+
+.ear-left {
+  left: 0;
+  transform: rotate(-25deg);
+}
+
+.ear-right {
+  right: 0;
+  transform: rotate(25deg);
+}
+
+.ear-inner {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-bottom: 20px solid #ff6b6b;
+  top: 8px;
+}
+
+.ear-inner-left {
+  left: -12px;
+  transform: rotate(-25deg);
+}
+
+.ear-inner-right {
+  right: -12px;
+  transform: rotate(25deg);
+}
+
+/* Ojos detallados */
+.cat-eyes {
+  position: absolute;
+  width: 80px;
+  height: 30px;
+  bottom: 180px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.eye {
+  position: absolute;
+  width: 25px;
+  height: 35px;
+  background: linear-gradient(45deg, #0a3a5f, #1e6fa8);
+  border-radius: 50%;
+  overflow: hidden;
+  animation: blink 6s infinite;
+  box-shadow: 
+    0 0 15px rgba(74, 157, 240, 0.7),
+    inset 0 0 10px rgba(255,255,255,0.3);
+}
+
+body.medio-dia .eye {
+  box-shadow: 
+    0 0 10px rgba(74, 157, 240, 0.5),
+    inset 0 0 8px rgba(255,255,255,0.5);
+}
+
+.eye-left {
+  left: 5px;
+}
+
+.eye-right {
+  right: 5px;
+}
+
+.eye-pupil {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: #000;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.3s ease;
+}
+
+.eye-highlight {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: white;
+  border-radius: 50%;
+  top: 8px;
+  left: 8px;
+  opacity: 0.9;
+}
+
+@keyframes blink {
+  0%, 45%, 50%, 55%, 100% { height: 35px; }
+  47.5%, 52.5% { height: 5px; }
+}
+
+/* Nariz y boca */
+.cat-face {
+  position: absolute;
+  width: 60px;
+  height: 40px;
+  bottom: 160px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.nose {
+  position: absolute;
+  width: 16px;
+  height: 10px;
+  background: #ff6b6b;
+  border-radius: 8px 8px 4px 4px;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.mouth {
+  position: absolute;
+  width: 2px;
+  height: 15px;
+  background: #ff6b6b;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Bigotes */
+.whiskers {
+  position: absolute;
+  width: 120px;
+  height: 20px;
+  bottom: 165px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.whisker {
+  position: absolute;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.8);
+  animation: whiskerTwitch 8s infinite;
+}
+
+.whisker-left {
+  left: 0;
+  transform-origin: right center;
+}
+
+.whisker-right {
+  right: 0;
+  transform-origin: left center;
+}
+
+@keyframes whiskerTwitch {
+  0%, 90%, 100% { transform: scaleX(1); opacity: 0.8; }
+  92%, 98% { transform: scaleX(1.1); opacity: 1; }
+}
+
+/* Cola mejorada */
+.cat-tail {
+  position: absolute;
+  width: 120px;
+  height: 25px;
+  background: linear-gradient(90deg, #1a1a1a, #2d2d2d, #1a1a1a);
+  border-radius: 12px;
+  bottom: 60px;
+  right: 60px;
+  transform-origin: left center;
+  animation: tailMove 8s ease-in-out infinite;
+  box-shadow: 
+    -2px 0 5px rgba(0,0,0,0.5),
+    inset 5px 0 5px rgba(255,255,255,0.1);
+}
+
+@keyframes tailMove {
+  0%, 100% { transform: rotate(-10deg) scaleY(1); }
+  25% { transform: rotate(5deg) scaleY(1.05); }
+  50% { transform: rotate(15deg) scaleY(1.1); }
+  75% { transform: rotate(5deg) scaleY(1.05); }
+}
+
+/* Patas */
+.paws {
+  position: absolute;
+  width: 200px;
+  height: 30px;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.paw {
+  position: absolute;
+  width: 35px;
+  height: 25px;
+  background: #1a1a1a;
+  border-radius: 15px 15px 8px 8px;
+  bottom: 0;
+  box-shadow: 
+    inset 0 -3px 5px rgba(255,255,255,0.1),
+    0 2px 5px rgba(0,0,0,0.5);
+}
+
+.paw-front-left { left: 40px; }
+.paw-front-right { right: 40px; }
+.paw-back-left { left: 80px; animation: pawLift 7s infinite; }
+.paw-back-right { right: 80px; animation: pawLift 7s infinite 3.5s; }
+
+@keyframes pawLift {
+  0%, 95%, 100% { bottom: 0; }
+  97% { bottom: 10px; }
+}
+
+/* Texto flotante */
+.message {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.5rem;
+  text-align: center;
+  z-index: 2;
+  opacity: 0;
+  animation: fadeInOut 12s infinite;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  font-style: italic;
+  transition: color 2s ease;
+}
+
+body.medio-dia .message {
+  color: rgba(0, 0, 0, 0.7);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+}
+
+@keyframes fadeInOut {
+  0%, 100% { opacity: 0; transform: translateX(-50%) translateY(10px); }
+  20%, 80% { opacity: 0.8; transform: translateX(-50%) translateY(0); }
+}
+
+/* Botón interactivo */
+.button {
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 12px 25px;
+  border-radius: 25px;
+  cursor: pointer;
+  z-index: 5;
+  backdrop-filter: blur(5px);
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
+
+body.medio-dia .button {
+  background: rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  color: #333;
+}
+
+.button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateX(-50%) scale(1.05);
+}
+
+body.medio-dia .button:hover {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* Indicador de hora */
+.time-indicator {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  z-index: 6;
+  backdrop-filter: blur(5px);
+  transition: all 0.5s ease;
+}
+
+/* Efecto de brillo en el borde */
+.glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background: radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+  z-index: 1;
+  transition: opacity 2s ease;
+}
+
+body.medio-dia .glow {
+  opacity: 0.3;
+  background: radial-gradient(circle at 50% 20%, rgba(255, 255, 255, 0.3) 0%, transparent 60%);
+}
+</style>
+</head>
+<body class="noche">
+<div class="stars" id="stars"></div>
+<div class="glow"></div>
+
+<!-- Cuerpos celestes -->
+<div class="celestial-body luna"></div>
+<div class="celestial-body sol"></div>
+
+<div class="hill" id="hill">
+  <!-- La vegetación se genera con JavaScript -->
+</div>
+
+<!-- Indicador de hora -->
+<div class="time-indicator" id="timeIndicator">Noche Estrellada</div>
+
+<!-- Mensaje flotante -->
+<div class="message" id="message">Bajo la luz de la luna, todo es posible...</div>
+
+<!-- 🐈 GATO ULTRA MEJORADO -->
+<div class="cat-container">
+  <!-- Cuerpo -->
+  <div class="cat-body"></div>
+  
+  <!-- Cabeza -->
+  <div class="cat-head"></div>
+  
+  <!-- Orejas -->
+  <div class="cat-ears">
+    <div class="ear ear-left">
+      <div class="ear-inner ear-inner-left"></div>
+    </div>
+    <div class="ear ear-right">
+      <div class="ear-inner ear-inner-right"></div>
+    </div>
+  </div>
+  
+  <!-- Ojos -->
+  <div class="cat-eyes">
+    <div class="eye eye-left">
+      <div class="eye-pupil"></div>
+      <div class="eye-highlight"></div>
+    </div>
+    <div class="eye eye-right">
+      <div class="eye-pupil"></div>
+      <div class="eye-highlight"></div>
+    </div>
+  </div>
+  
+  <!-- Cara -->
+  <div class="cat-face">
+    <div class="nose"></div>
+    <div class="mouth"></div>
+  </div>
+  
+  <!-- Bigotes -->
+  <div class="whiskers">
+    <!-- Bigotes izquierdos -->
+    <div class="whisker whisker-left" style="width: 40px; top: 5px; transform: rotate(-5deg);"></div>
+    <div class="whisker whisker-left" style="width: 45px; top: 10px; transform: rotate(0deg);"></div>
+    <div class="whisker whisker-left" style="width: 40px; top: 15px; transform: rotate(5deg);"></div>
+    <!-- Bigotes derechos -->
+    <div class="whisker whisker-right" style="width: 40px; top: 5px; transform: rotate(5deg);"></div>
+    <div class="whisker whisker-right" style="width: 45px; top: 10px; transform: rotate(0deg);"></div>
+    <div class="whisker whisker-right" style="width: 40px; top: 15px; transform: rotate(-5deg);"></div>
+  </div>
+  
+  <!-- Cola -->
+  <div class="cat-tail"></div>
+  
+  <!-- Patas -->
+  <div class="paws">
+    <div class="paw paw-front-left"></div>
+    <div class="paw paw-front-right"></div>
+    <div class="paw paw-back-left"></div>
+    <div class="paw paw-back-right"></div>
+  </div>
+</div>
+
+<!-- Botón interactivo -->
+<button class="button" id="timeButton">Cambiar Hora 🌅</button>
+
+<script>
+// Estados de hora
+const timeStates = [
+  { 
+    class: 'noche', 
+    name: 'Noche Estrellada',
+    messages: [
+      "Bajo la luz de la luna el gato quiere decirte unas palabras...",
+      "Los secretos del universo se revelan en la noche",
+      "Las estrellas susurran historias antiguas"
+    ]
+  },
+  { 
+    class: 'atardecer', 
+    name: 'Atardecer Dorado',
+    messages: [
+      "El sol se despide pintando el cielo",
+      "Los últimos rayos acarician la tierra",
+      "El día se convierte en recuerdo de tu hermosa sonriza"
+    ]
+  },
+  { 
+    class: 'amanecer', 
+    name: 'Amanecer Mágico',
+    messages: [
+      "Un nuevo día nace con esperanza",
+      "de ver tu sonrisa hermosa una vez mas",
+      "y la calidez de tu voz al hablar"
+    ]
+  },
+  { 
+    class: 'medio-dia', 
+    name: 'Medio Día Brillante',
+    messages: [
+      "El sol brilla en su máximo esplendor",
+      "La vida late con energía y color",
+      "Cada momento es una oportunidad de saber mas de ti mas mi mente tonta no logra saber que hacer al lado tuyo"
+    ]
+  }
+];
+
+let currentTimeState = 0;
+let currentMessageIndex = 0;
+
+// Crear estrellas mejoradas
+function createStars() {
+  const starsContainer = document.getElementById('stars');
+  for (let i = 0; i < 200; i++) {
+    const star = document.createElement('div');
+    star.className = 'star';
+    
+    // Diferentes tamaños de estrellas
+    const sizeType = Math.random();
+    if (sizeType < 0.6) {
+      star.classList.add('small');
+    } else if (sizeType < 0.9) {
+      star.classList.add('medium');
+    } else {
+      star.classList.add('large');
+    }
+    
+    star.style.top = `${Math.random() * 100}vh`;
+    star.style.left = `${Math.random() * 100}vw`;
+    star.style.animationDelay = `${Math.random() * 4}s`;
+    starsContainer.appendChild(star);
+  }
+}
+
+// Crear estrellas fugaces (solo en noche)
+function createShootingStars() {
+  const starsContainer = document.getElementById('stars');
+  
+  setInterval(() => {
+    if (currentTimeState === 0 && Math.random() > 0.7) {
+      const shootingStar = document.createElement('div');
+      shootingStar.className = 'shooting-star';
+      shootingStar.style.top = `${Math.random() * 50}vh`;
+      shootingStar.style.left = `${Math.random() * 100}vw`;
+      shootingStar.style.animation = `shootingStar 2s linear`;
+      
+      starsContainer.appendChild(shootingStar);
+      
+      setTimeout(() => {
+        shootingStar.remove();
+      }, 2000);
+    }
+  }, 3000);
+}
+
+// Añadir animación para estrellas fugaces
+const style = document.createElement('style');
+style.textContent = `
+  @keyframes shootingStar {
+    0% {
+      transform: translateX(0) translateY(0) rotate(-45deg);
+      opacity: 0;
+    }
+    10% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateX(500px) translateY(500px) rotate(-45deg);
+      opacity: 0;
+    }
+  }
+`;
+document.head.appendChild(style);
+
+// Generar vegetación en la colina
+function generateVegetation() {
+  const hill = document.getElementById('hill');
+  
+  // Capa de pasto
+  const grassLayer = document.createElement('div');
+  grassLayer.className = 'grass';
+  hill.appendChild(grassLayer);
+  
+  // Hierbas individuales
+  for (let i = 0; i < 80; i++) {
+    const blade = document.createElement('div');
+    blade.className = 'blade';
+    blade.style.left = `${Math.random() * 100}%`;
+    blade.style.height = `${Math.random() * 20 + 10}px`;
+    blade.style.animationDelay = `${Math.random() * 3}s`;
+    hill.appendChild(blade);
+  }
+  
+  // Arbustos
+  for (let i = 0; i < 12; i++) {
+    const bush = document.createElement('div');
+    bush.className = 'bush';
+    bush.style.left = `${Math.random() * 100}%`;
+    bush.style.bottom = `${Math.random() * 30 + 10}px`;
+    const size = Math.random() * 40 + 20;
+    bush.style.width = `${size}px`;
+    bush.style.height = `${size * 0.7}px`;
+    hill.appendChild(bush);
+  }
+  
+  // Flores
+  for (let i = 0; i < 15; i++) {
+    const flower = document.createElement('div');
+    flower.className = 'flower';
+    flower.style.left = `${Math.random() * 100}%`;
+    flower.style.bottom = `${Math.random() * 20 + 5}px`;
+    
+    const stem = document.createElement('div');
+    stem.className = 'flower-stem';
+    stem.style.height = `${Math.random() * 30 + 20}px`;
+    
+    const bloom = document.createElement('div');
+    bloom.className = 'flower-bloom';
+    bloom.style.animationDelay = `${Math.random() * 4}s`;
+    
+    flower.appendChild(stem);
+    flower.appendChild(bloom);
+    hill.appendChild(flower);
+  }
+  
+  // Rocas
+  for (let i = 0; i < 8; i++) {
+    const rock = document.createElement('div');
+    rock.className = 'rock';
+    rock.style.left = `${Math.random() * 100}%`;
+    rock.style.bottom = `${Math.random() * 15}px`;
+    const width = Math.random() * 25 + 10;
+    const height = Math.random() * 15 + 8;
+    rock.style.width = `${width}px`;
+    rock.style.height = `${height}px`;
+    hill.appendChild(rock);
+  }
+  
+  // Árboles pequeños
+  for (let i = 0; i < 5; i++) {
+    const tree = document.createElement('div');
+    tree.className = 'tree';
+    tree.style.left = `${Math.random() * 100}%`;
+    tree.style.bottom = '0';
+    
+    const trunk = document.createElement('div');
+    trunk.className = 'tree-trunk';
+    trunk.style.height = `${Math.random() * 40 + 30}px`;
+    
+    const top = document.createElement('div');
+    top.className = 'tree-top';
+    
+    tree.appendChild(trunk);
+    tree.appendChild(top);
+    hill.appendChild(tree);
+  }
+}
+
+// Generar luciérnagas (solo para noche)
+function generateFireflies() {
+  const container = document.getElementById('stars');
+  
+  for (let i = 0; i < 15; i++) {
+    const firefly = document.createElement('div');
+    firefly.className = 'firefly';
+    firefly.style.left = `${Math.random() * 100}%`;
+    firefly.style.bottom = `${Math.random() * 30 + 10}%`;
+    firefly.style.animationDelay = `${Math.random() * 8}s`;
+    container.appendChild(firefly);
+  }
+}
+
+// Cambiar hora
+function changeTime() {
+  currentTimeState = (currentTimeState + 1) % timeStates.length;
+  const newState = timeStates[currentTimeState];
+  
+  // Cambiar clase del body
+  document.body.className = newState.class;
+  
+  // Actualizar indicador de hora
+  document.getElementById('timeIndicator').textContent = newState.name;
+  
+  // Cambiar mensaje
+  currentMessageIndex = 0;
+  changeMessage();
+  
+  // Mostrar/ocultar luciérnagas según la hora
+  const fireflies = document.querySelectorAll('.firefly');
+  fireflies.forEach(fly => {
+    fly.style.display = currentTimeState === 0 ? 'block' : 'none';
+  });
+  
+  // Efectos especiales según la hora
+  if (currentTimeState === 0) {
+    // Noche: crear partículas mágicas
+    createParticles();
+  }
+  
+  // Actualizar texto del botón
+  const button = document.getElementById('timeButton');
+  const nextState = timeStates[(currentTimeState + 1) % timeStates.length];
+  button.textContent = `Siguiente: ${nextState.name.split(' ')[0]} ${getEmoji(nextState.class)}`;
+}
+
+// Obtener emoji para el botón
+function getEmoji(timeClass) {
+  const emojis = {
+    'noche': '🌙',
+    'atardecer': '🌅',
+    'amanecer': '🌄',
+    'medio-dia': '☀️'
+  };
+  return emojis[timeClass];
+}
+
+// Cambiar mensaje
+function changeMessage() {
+  const messageElement = document.getElementById('message');
+  const messages = timeStates[currentTimeState].messages;
+  
+  messageElement.style.opacity = '0';
+  
+  setTimeout(() => {
+    currentMessageIndex = (currentMessageIndex + 1) % messages.length;
+    messageElement.textContent = messages[currentMessageIndex];
+    messageElement.style.opacity = '0.8';
+  }, 1000);
+}
+
+// Rotar mensajes automáticamente
+setInterval(changeMessage, 8000);
+
+// Efecto del botón de tiempo
+document.getElementById('timeButton').addEventListener('click', function() {
+  changeTime();
+  
+  // Efecto visual en los ojos del gato
+  const pupils = document.querySelectorAll('.eye-pupil');
+  pupils.forEach(pupil => {
+    pupil.style.transform = 'translate(-70%, -50%)';
+    setTimeout(() => {
+      pupil.style.transform = 'translate(-50%, -50%)';
+    }, 800);
+  });
+});
+
+// Crear partículas mágicas (para la noche)
+function createParticles() {
+  const particlesContainer = document.getElementById('stars');
+  
+  for (let i = 0; i < 20; i++) {
+    setTimeout(() => {
+      const particle = document.createElement('div');
+      particle.style.position = 'absolute';
+      particle.style.width = '4px';
+      particle.style.height = '4px';
+      particle.style.background = 'white';
+      particle.style.borderRadius = '50%';
+      particle.style.top = '70%';
+      particle.style.left = '50%';
+      particle.style.opacity = '0';
+      particle.style.animation = `particleFloat ${Math.random() * 2 + 1}s ease-out forwards`;
+      
+      particlesContainer.appendChild(particle);
+      
+      setTimeout(() => {
+        particle.remove();
+      }, 3000);
+    }, i * 100);
+  }
+  
+  // Añadir animación para partículas
+  const particleStyle = document.createElement('style');
+  particleStyle.textContent = `
+    @keyframes particleFloat {
+      0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(${Math.random() * 200 - 100}px, ${Math.random() * -100 - 50}px) scale(0);
+        opacity: 0;
+      }
+    }
+  `;
+  document.head.appendChild(particleStyle);
+}
+
+// Hacer que los ojos sigan el cursor
+document.addEventListener('mousemove', (e) => {
+  const pupils = document.querySelectorAll('.eye-pupil');
+  const rect = document.querySelector('.cat-eyes').getBoundingClientRect();
+  const eyeCenterX = rect.left + rect.width / 2;
+  const eyeCenterY = rect.top + rect.height / 2;
+  
+  const angleX = (e.clientX - eyeCenterX) / 50;
+  const angleY = (e.clientY - eyeCenterY) / 50;
+  
+  pupils.forEach(pupil => {
+    pupil.style.transform = `translate(calc(-50% + ${angleX}px), calc(-50% + ${angleY}px))`;
+  });
+});
+
+// Inicializar
+createStars();
+createShootingStars();
+generateVegetation();
+generateFireflies();
+</script>
+</body>
+</html>
